@@ -1,4 +1,4 @@
-﻿namespace eShopSolution.Data.Entities
+﻿ namespace eShopSolution.Data.Entities
 {
     public class ProductInCategory
     {

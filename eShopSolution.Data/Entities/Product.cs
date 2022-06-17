@@ -11,14 +11,14 @@
 
         public bool? IsFeatured { get; set; }
 
-        public List<ProductInCategory> ProductInCategories { get; set; }
+        public ICollection<ProductInCategory> ProductInCategories { get; set; }
 
-        public List<OrderDetail> OrderDetails { get; set; }
+        public ICollection<OrderDetail> OrderDetails { get; set; }
 
-        public List<Cart> Carts { get; set; }
+        public ICollection<Cart> Carts { get; set; }
 
-        public List<ProductTranslation> ProductTranslations { get; set; }
+        public ICollection<ProductTranslation> ProductTranslations { get; set; }
 
-        public List<ProductImage> ProductImages { get; set; }
+        public ICollection<ProductImage> ProductImages { get; set; }
     }
 }
