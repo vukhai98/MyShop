@@ -1,10 +1,11 @@
 ﻿using eShopSolution.Data.Configurations;
 using eShopSolution.Data.Entities;
+using eShopSolution.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace eShopSolution.Data.EF
 {
-    public class EShopDbContext : DbContext
+    public class EShopDbContext   : DbContext
     {
         public EShopDbContext(DbContextOptions options) : base(options)
         {
@@ -46,6 +47,10 @@ namespace eShopSolution.Data.EF
             modelBuilder.ApplyConfiguration(new ProductImageConfiguration());
 
             modelBuilder.ApplyConfiguration(new SlideConfiguration());
+
+            // Seed Data 
+
+            modelBuilder.Seed();
         }
 
         public DbSet<Product> Products { get; set; }
