@@ -1,5 +1,6 @@
 ﻿using eShopSolution.Data.Entities;
 using eShopSolution.Data.Enums;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,20 +12,20 @@ namespace eShopSolution.Data.Extensions
 {
     public static class ModelBuilderExtensions
     {
-        public static void Seed(this ModelBuilder modelBuiler)
+        public static void Seed(this ModelBuilder modelBuilder)
         {
-            modelBuiler.Entity<AppConfig>().HasData(
+            modelBuilder.Entity<AppConfig>().HasData(
                     new AppConfig() { Key = "HomeTitle", Value = "This is home page of eShopSolution" },
                     new AppConfig() { Key = "HomeKeyword", Value = "This is key word of eShopSolution" },
                     new AppConfig() { Key = "HomeDescription", Value = "This is description of eShopSolution" }
                 );
 
-            modelBuiler.Entity<Language>().HasData(
+            modelBuilder.Entity<Language>().HasData(
                     new Language() { Id = "vi-Vn", Name = "Tiếng Việt", IsDefault = true },
                     new Language() { Id = "en-US", Name = "English", IsDefault = false }
                     );
 
-            modelBuiler.Entity<Category>().HasData(
+            modelBuilder.Entity<Category>().HasData(
                        new Category()
                        {
                            Id = 1,
@@ -43,14 +44,14 @@ namespace eShopSolution.Data.Extensions
                         }
                     );
 
-            modelBuiler.Entity<CategoryTranslation>().HasData(
+            modelBuilder.Entity<CategoryTranslation>().HasData(
                         new CategoryTranslation() { Id = 1, CategoryId = 1, Name = "Áo nam", LanguageId = "vi-Vn", SeoAlias = "ao-nam", SeoDescription = " Sản phẩm áo thời trang nam việt tiến", SeoTitle = " Sản phẩm áo thời trang nam việt tiến" },
                         new CategoryTranslation() { Id = 2, CategoryId = 1, Name = "Men Shirt", LanguageId = "en-Us", SeoAlias = " t-shirt-men ", SeoDescription = "This is T-Shirt men of Viet Tien", SeoTitle = "This is T-Shirt men of Viet Tien" },
                         new CategoryTranslation() { Id = 3, CategoryId = 2, Name = "Áo nữ", LanguageId = "vi-Vn", SeoAlias = "ao-nu", SeoDescription = " Sản phẩm áo thời trang nữ việt tiến", SeoTitle = " Sản phẩm áo thời trang nữ việt tiến" },
                         new CategoryTranslation() { Id = 4, CategoryId = 2, Name = "Women Shirt", LanguageId = "en-Us", SeoAlias = "t-shirt-women", SeoDescription = "This is T-Shirt women of Viet Tien", SeoTitle = "This is T-Shirt women of Viet Tien" }
                 );
 
-            modelBuiler.Entity<Product>().HasData(
+            modelBuilder.Entity<Product>().HasData(
                     new Product()
                     {
                         Id = 1,
@@ -62,7 +63,7 @@ namespace eShopSolution.Data.Extensions
 
                     });
 
-            modelBuiler.Entity<ProductTranslation>().HasData(
+            modelBuilder.Entity<ProductTranslation>().HasData(
                     new ProductTranslation()
                     {
                         Id = 1,
@@ -89,9 +90,43 @@ namespace eShopSolution.Data.Extensions
                     });
 
 
-            modelBuiler.Entity<ProductInCategory>().HasData(
+            modelBuilder.Entity<ProductInCategory>().HasData(
                     new ProductInCategory() { ProductId = 1, CategoryId = 1 }
                     );
+
+            // any guid
+            var roleId = new Guid("8D04DCE2-969A-435D-BBA4-DF3F325983DC");
+            var adminId = new Guid("69BD714F-9576-45BA-B5B7-F00649BE00DE");
+
+            modelBuilder.Entity<AppRole>().HasData(new AppRole
+            {
+                Id = roleId,
+                Name = "admin",
+                NormalizedName = "admin",
+                Description = "Administrator role"
+            });
+
+            var hasher = new PasswordHasher<AppUser>();
+            modelBuilder.Entity<AppUser>().HasData(new AppUser
+            {
+                Id = adminId,
+                UserName = "admin",
+                NormalizedUserName = "admin",
+                Email = "vukhai27091998@gmail.com",
+                NormalizedEmail = "VUKHAI27091998@GMAIL.COM",
+                EmailConfirmed = true,
+                PasswordHash = hasher.HashPassword(null, "Abcd1234$"),
+                SecurityStamp = string.Empty,
+                FirstName = "Khải",
+                LastName = "Vũ Minh",
+                Dob = new DateTime(2020, 01, 31)
+            });
+
+            modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
+            {
+                RoleId = roleId,
+                UserId = adminId
+            });
 
         }
     }
