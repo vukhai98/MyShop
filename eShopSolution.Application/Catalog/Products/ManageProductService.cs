@@ -1,9 +1,9 @@
-﻿using eShopSolution.Application.Catalog.DataTranferObjects;
-using eShopSolution.Application.Catalog.Products.DataTranferObjects;
-using eShopSolution.Application.Catalog.Products.DataTranferObjects.Manage;
-using eShopSolution.Data.EF;
+﻿using eShopSolution.Data.EF;
 using eShopSolution.Data.Entities;
 using eShopSolution.Utilities.Exceptions;
+using eShopSolution.ViewModels.Catalog.Products;
+using eShopSolution.ViewModels.Catalog.Products.Manage;
+using eShopSolution.ViewModels.Common;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

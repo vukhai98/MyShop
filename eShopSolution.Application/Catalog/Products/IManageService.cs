@@ -1,6 +1,6 @@
-﻿using eShopSolution.Application.Catalog.DataTranferObjects;
-using eShopSolution.Application.Catalog.Products.DataTranferObjects;
-using eShopSolution.Application.Catalog.Products.DataTranferObjects.Manage;
+﻿using eShopSolution.ViewModels.Catalog.Products;
+using eShopSolution.ViewModels.Catalog.Products.Manage;
+using eShopSolution.ViewModels.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;

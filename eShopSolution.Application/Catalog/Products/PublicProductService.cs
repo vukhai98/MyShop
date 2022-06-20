@@ -1,7 +1,7 @@
-﻿using eShopSolution.Application.Catalog.DataTranferObjects;
-using eShopSolution.Application.Catalog.Products.DataTranferObjects;
-using eShopSolution.Application.Catalog.Products.DataTranferObjects.Public;
+﻿using eShopSolution.Application.Catalog.Products.DataTranferObjects.Public;
 using eShopSolution.Data.EF;
+using eShopSolution.ViewModels.Catalog.Products;
+using eShopSolution.ViewModels.Common;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

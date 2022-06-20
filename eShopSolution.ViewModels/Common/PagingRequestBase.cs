@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eShopSolution.Application.DataTranferObjects
+namespace eShopSolution.ViewModels.Common
 {
     public class PagingRequestBase
     {

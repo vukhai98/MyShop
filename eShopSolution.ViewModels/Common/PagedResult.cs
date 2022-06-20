@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eShopSolution.Application.Catalog.DataTranferObjects
+namespace eShopSolution.ViewModels.Common
 {
     public class PagedResult<T>
     {
         public List<T> Items { set; get; }
 
-        public int TotalRecord { set; get; }    
+        public int TotalRecord { set; get; }
     }
 }
