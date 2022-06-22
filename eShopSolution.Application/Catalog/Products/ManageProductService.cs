@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace eShopSolution.Application.Catalog.Products
 {
-    public class ManageProductService : IManageService
+    public class ManageProductService : IManageProductService
     {
         private readonly EShopDbContext _context;
 
@@ -37,7 +37,7 @@ namespace eShopSolution.Application.Catalog.Products
             await _context.SaveChangesAsync();
         }
 
-        public async Task<int> Creat(ProductCreateRequest request)
+        public async Task<int> Create(ProductCreateRequest request)
         {
             var product = new Product()
             {
@@ -79,8 +79,9 @@ namespace eShopSolution.Application.Catalog.Products
             }
 
             _context.Products.Add(product);
+            await _context.SaveChangesAsync();
 
-            return await _context.SaveChangesAsync();
+            return product.Id;
         }
 
         public async Task<int> Delete(int productId)
@@ -233,7 +234,7 @@ namespace eShopSolution.Application.Catalog.Products
             return fileName;
         }
 
-        public async Task<int> RemoveImages(int imageId)
+        public async Task<int> RemoveImage(int imageId)
         {
             var productImage = await _context.ProductImages.FindAsync(imageId);
 
@@ -264,7 +265,7 @@ namespace eShopSolution.Application.Catalog.Products
                                                }).ToListAsync();
         }
 
-        public async Task<int> AddImages(int productId, ProductImageCreateRequest request)
+        public async Task<int> AddImage(int productId, ProductImageCreateRequest request)
         {
             var productImage = new ProductImage()
             {
@@ -284,10 +285,12 @@ namespace eShopSolution.Application.Catalog.Products
 
             await _context.ProductImages.AddAsync(productImage);
 
-            return await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
+
+            return productImage.Id;
         }
 
-        public async Task<int> UpdateImages(int imageId, ProductImageUpdateRequest request)
+        public async Task<int> UpdateImage(int imageId, ProductImageUpdateRequest request)
         {
             var productImage = await _context.ProductImages.FindAsync(imageId);
 
@@ -325,6 +328,32 @@ namespace eShopSolution.Application.Catalog.Products
 
             return imageViewModel;
 
+        }
+
+        public async Task<ProductViewModel> GetProductById(int productId, string languageId)
+        {
+            var product = await _context.Products.FindAsync(productId);
+            var productTranslation = await _context.ProductTranslations.FirstOrDefaultAsync(x => x.ProductId == productId && x.LanguageId == languageId);
+
+            var productViewModel = new ProductViewModel()
+            {
+                Id = product.Id,
+                DateCreated = product.DateCreated,
+                Price = product.Price,
+                OriginalPrice = product.OriginalPrice,
+                ViewCount = product.ViewCount,
+                Stock = product.Stock,
+                Description = productTranslation != null ? productTranslation.Description : null,
+                Details = productTranslation != null ? productTranslation.Details : null,
+                SeoAlias = productTranslation != null ? productTranslation.SeoAlias : null,
+                SeoDescription = productTranslation != null ? productTranslation.SeoDescription : null,
+                SeoTitle = productTranslation != null ? productTranslation.SeoTitle : null,
+                LanguageId = productTranslation != null ? productTranslation.LanguageId : null,
+                Name = productTranslation != null ? productTranslation.Name : null,
+
+            };
+
+            return productViewModel;
         }
     }
 }
