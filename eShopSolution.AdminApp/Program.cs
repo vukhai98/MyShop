@@ -1,13 +1,22 @@
 using eShopSolution.AdminApp.Services;
 using eShopSolution.ViewModels.Systems;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddHttpClient();
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(option =>
+                {
+                    option.LoginPath = "/User/Login/";
+                    option.AccessDeniedPath = "/Acount/Forbidden";
+                });
+
 // Add services to the container.
-builder.Services.AddControllersWithViews().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>()); ;
+builder.Services.AddControllersWithViews()
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>()); ;
 
 var evironment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
