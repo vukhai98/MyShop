@@ -35,7 +35,7 @@ namespace eShopSolution.BackendAPI.Controllers
         }
 
 
-        [HttpPost("register")]
+        [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
@@ -52,6 +52,17 @@ namespace eShopSolution.BackendAPI.Controllers
 
             return Ok();
         }
+
+        // https://localhost:5001/api/product/?pageIndex=1&pageSize=10&keyword=
+        [HttpGet("paging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] GetUserPagingRequest request)
+        {
+
+            var listUser = await _userService.GetUserPaging(request);
+
+            return Ok(listUser);
+        }
+
 
 
     }
