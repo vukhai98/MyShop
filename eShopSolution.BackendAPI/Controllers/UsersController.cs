@@ -24,14 +24,14 @@ namespace eShopSolution.BackendAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var resultToken = await _userService.Authencate(request);
+            var result = await _userService.Authencate(request);
 
-            if (string.IsNullOrEmpty(resultToken))
+            if (string.IsNullOrEmpty(result.ResultObj))
             {
-                return BadRequest("Username or password is incorrect");
+                return BadRequest(result);
             }
 
-            return Ok(resultToken);
+            return Ok(result);
         }
 
 
@@ -45,12 +45,29 @@ namespace eShopSolution.BackendAPI.Controllers
             }
             var result = await _userService.Register(request);
 
-            if (!result)
+            if (!result.IsSuccessed)
             {
-                return BadRequest("Register is fail!");
+                return BadRequest(result);
             }
 
-            return Ok();
+            return Ok(result);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(Guid id, [FromBody] UserUpdateRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var result = await _userService.Update(id, request);
+
+            if (!result.IsSuccessed)
+            {
+                return BadRequest(result);
+            }
+
+            return Ok(result);
         }
 
         // https://localhost:5001/api/product/?pageIndex=1&pageSize=10&keyword=
@@ -62,6 +79,17 @@ namespace eShopSolution.BackendAPI.Controllers
 
             return Ok(listUser);
         }
+
+        //https://localhost:5001/api/product/?pageIndex=1&pageSize=10&keyword=
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(Guid id, [FromQuery] GetUserPagingRequest request)
+        {
+
+            var user = await _userService.GetById(id);
+
+            return Ok(user);
+        }
+
 
 
 
