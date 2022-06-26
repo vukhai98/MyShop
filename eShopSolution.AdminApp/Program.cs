@@ -24,6 +24,8 @@ builder.Services.AddSession(options =>
 builder.Services.AddControllersWithViews()
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>()); ;
 
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
 var evironment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
 #if DEBUG
