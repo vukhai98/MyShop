@@ -124,7 +124,9 @@ namespace eShopSolution.Application.Systems
             var pagedResult = new PagedResult<UserViewModel>()
             {
                 Items = data,
-                TotalRecord = totalRow,
+                TotalRecords = totalRow,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize
 
             };
 
