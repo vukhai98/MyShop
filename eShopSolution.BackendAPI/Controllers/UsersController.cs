@@ -1,5 +1,5 @@
 ﻿using eShopSolution.Application.Systems;
-using eShopSolution.ViewModels.Systems;
+using eShopSolution.ViewModels.Systems.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -90,7 +90,14 @@ namespace eShopSolution.BackendAPI.Controllers
             return Ok(user);
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
 
+            var user = await _userService.Delete(id);
+
+            return Ok(user);
+        }
 
 
     }

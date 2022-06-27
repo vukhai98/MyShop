@@ -3,7 +3,7 @@ using eShopSolution.Application.Common;
 using eShopSolution.Application.Systems;
 using eShopSolution.Data.EF;
 using eShopSolution.Data.Entities;
-using eShopSolution.ViewModels.Systems;
+using eShopSolution.ViewModels.Systems.User;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;

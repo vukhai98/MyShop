@@ -1,5 +1,5 @@
 ﻿using eShopSolution.AdminApp.Services;
-using eShopSolution.ViewModels.Systems;
+using eShopSolution.ViewModels.Systems.User;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +22,7 @@ namespace eShopSolution.AdminApp.Controllers
             _configuration = configuration;
         }
 
-        public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 1)
+        public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 10)
         {
             var request = new GetUserPagingRequest()
             {
@@ -35,13 +35,6 @@ namespace eShopSolution.AdminApp.Controllers
             return View(data.ResultObj);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Details(Guid id)
-        {
-            var result = await _userApiClient.GetById(id);
-
-            return View(result.ResultObj);
-        }
 
         [HttpGet]
         public IActionResult Create()
@@ -111,6 +104,29 @@ namespace eShopSolution.AdminApp.Controllers
 
             return View(request);
 
+        }
+
+        [HttpGet]
+        public IActionResult Delete(UserDeleteRequest request)
+        {
+
+            return View(new UserDeleteRequest()
+            {
+                Id = request.Id
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var result = await _userApiClient.DeleteUser(id);
+
+            if (result.IsSuccessed)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View();
         }
 
 

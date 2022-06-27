@@ -1,5 +1,5 @@
 ﻿using eShopSolution.ViewModels.Common;
-using eShopSolution.ViewModels.Systems;
+using eShopSolution.ViewModels.Systems.User;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Text;
@@ -83,7 +83,7 @@ namespace eShopSolution.AdminApp.Services
             var json = JsonConvert.SerializeObject(request);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-            
+
             var response = await client.PutAsync($"/api/users/{id}", httpContent);
 
             var result = await response.Content.ReadAsStringAsync();
@@ -110,6 +110,23 @@ namespace eShopSolution.AdminApp.Services
                 return JsonConvert.DeserializeObject<ApiSuccessResult<UserViewModel>>(body);
 
             return JsonConvert.DeserializeObject<ApiErrorResult<UserViewModel>>(body);
+        }
+
+        public async Task<ApiResult<bool>> DeleteUser(Guid id)
+        {
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
+
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+            var response = await client.DeleteAsync($"/api/users/{id}");
+
+            var body = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(body);
+
+            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(body);
         }
     }
 }
