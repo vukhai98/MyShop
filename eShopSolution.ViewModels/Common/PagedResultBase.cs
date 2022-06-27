@@ -14,9 +14,11 @@ namespace eShopSolution.ViewModels.Common
 
         public int TotalRecords { set; get; }
 
-        public int PageCount {
-           
-            get {
+        public int PageCount
+        {
+
+            get
+            {
                 var pageCount = (double)TotalRecords / PageSize;
 
                 return (int)Math.Ceiling(pageCount);
