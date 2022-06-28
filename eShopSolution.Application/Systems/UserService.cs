@@ -38,14 +38,14 @@ namespace eShopSolution.Application.Systems
 
             if (user == null)
             {
-                return null;
+                return new ApiErrorResult<string>("User không tồn tại !");
             }
 
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
 
             if (!result.Succeeded)
             {
-                return null;
+                return new ApiErrorResult<string>("Tài khoản hoặc mật khẩu không đúng");
             }
 
             var roles = await _userManager.GetRolesAsync(user);
