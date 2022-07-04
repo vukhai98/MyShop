@@ -6,36 +6,52 @@
     ViewData["Title"] = "Danh sách người dùng";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section Scripts{
+    <script>
+        setTimeout(function() {
+            $(".alert-success").hide();
+        }, 2000);   
 
-
-<div class="container-fluid px-4">
-    <h1 class="mt-4">Danh sách người dùng</h1>
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-        <li class="breadcrumb-item active">Danh sách người dùng</li>
-    </ol>
-    <div class="card mb-4">
-        <div class="card-header">
-            <div class="row">
-                <div class="col-md-6 col-xs-12">
-                    <a class="btn btn-success" asp-action="Create" asp-controller="User">Tạo mới</a>
-                </div>
-                <div class="col-md-6 col-xs-12">
-                    <form asp-action="Index" method="get">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <input type="text" name="keyword" class="form-control" />
+    </script>
+}
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Danh sách người dùng</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item active">Danh sách người dùng</li>
+        </ol>
+        <div class="card mb-4">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-6 col-xs-12">
+                        <a class="btn btn-success" asp-action="Create" asp-controller="User">Tạo mới</a>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                        <form asp-action="Index" method="get">
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <input type="text" name="keyword" class="form-control" />
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="submit" @ViewBag.Keyword class="btn btn-primary">Tìm</button>
+                                    <button type="submit" onclick="window.location.href='/User/Index'" class=" btn btn-danger">Reset</button>
+                                </div>
                             </div>
-                            <div class="col-md-3">
-                                <button type="submit" @ViewBag.Keyword class="btn btn-primary">Tìm</button>
-                                <button type="submit" onclick="window.location.href='/User/Index'" class=" btn btn-danger">Reset</button>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="card-body">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        @if (ViewBag.SuccessMessage != null)
+                    {
+                        <div id="msgAlert" class="alert alert-success" role="alert">
+                            @ViewBag.SuccessMessage
+                        </div>
+                    }
+                </div>
+            </div>
             <div class="table-responsive">
                 <table class="table table-bordered" @*id="datatablesSimple"*@>
                     <thead>
