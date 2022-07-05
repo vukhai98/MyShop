@@ -37,6 +37,8 @@ if (evironment == Environments.Development)
 
 //DI
 builder.Services.AddTransient<IUserApiClient, UserApiClient>();
+builder.Services.AddTransient<IRoleApiClient, RoleApiClient>();
+
 
 
 var app = builder.Build();
