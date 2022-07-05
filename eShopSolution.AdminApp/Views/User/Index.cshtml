@@ -10,7 +10,7 @@
     <script>
         setTimeout(function() {
             $(".alert-success").hide();
-        }, 2000);   
+        }, 2000);
 
     </script>
 }
@@ -94,9 +94,10 @@
                                     @Html.DisplayFor(modelItem => item.UserName)
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Edit", "Edit", new {  id=item.Id  }) |
-                                    @Html.ActionLink("Details", "Details", new {  id=item.Id }) |
-                                    @Html.ActionLink("Delete", "Delete", new {  id=item.Id })
+                                    @Html.ActionLink("Sửa", "Edit", new {  id=item.Id  }) |
+                                    @Html.ActionLink("Chi tiết", "Details", new {  id=item.Id }) |
+                                    @Html.ActionLink("Xóa", "Delete", new {  id=item.Id })
+                                    @Html.ActionLink("Gán quyền", "RoleAssign", new {  id=item.Id })
                                 </td>
                             </tr>
                         }
